@@ -27,3 +27,34 @@ def dijkstra(g, s):
                 pq.put((newcost, i))
                 d[i] = newcost
     return d
+
+def KMP(text, pattern):
+    table = [0] * len(pattern)
+    i = 1
+    j = 0
+    
+    while i < len(pattern):
+        if pattern[i] == pattern[j]:
+            table[i] = j + 1
+            i += 1
+            j += 1
+        elif j != 0:
+            j = table[j - 1]
+        else:
+            i += 1
+            
+    i = 0
+    j = 0
+    while i < len(text) and j < len(pattern):
+        if text[i] == pattern[j]:
+            i += 1
+            j += 1
+        elif j != 0:
+            j = table[j - 1]
+        else:
+            i += 1
+        
+    if j == len(pattern):
+        return i - j
+    else:
+        return -1
